@@ -5,3 +5,5 @@ const LoadingIndicator = () => {
         <div className="loader"></div>
     </div>
 }
+
+export default LoadingIndicator

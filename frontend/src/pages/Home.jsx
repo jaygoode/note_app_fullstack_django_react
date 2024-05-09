@@ -28,7 +28,7 @@ function Home() {
       .delete(`/api/notes/delete/${id}/`)
       .then((res) => {
         if (res.status===204) alert("Note deleted!")
-          else alert("Failed to delete note.")
+        else alert("Failed to delete note.")
         getNotes()
       })
       .catch((error)=> alert(error))
@@ -36,13 +36,13 @@ function Home() {
 
   const createNote = (e) => {
     e.preventDefault()
-    api.post("/api/notes", { content, title })
+    api.post("/api/notes/", { content, title })
       .then((res) => {
       if (res.status ===201) alert("Note created!")
       else alert("Failed to make note")
       getNotes()
       })
-    .catch((err) => alert(err))
+      .catch((err) => alert(err))
   }
   return (
     <div>
@@ -58,7 +58,7 @@ function Home() {
         <br />
         <input type="text" id="title" name="title"  required onChange={(e)=>setTitle(e.target.value)} />
         <label htmlFor="content">Content</label>
-        <textarea name="content" id="content" required value={content} onChange={(e) => e.target.value}></textarea>
+        <textarea name="content" id="content" required value={content} onChange={(e) => setContent(e.target.value)}></textarea>
         <br />
         <input type="submit" value="submit" />
       </form>
