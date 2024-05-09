@@ -25,10 +25,47 @@ function Home() {
     
   const deleteNote = (id) => {
     api
-    .delete(`/api/notes/delete/${id}/`)
+      .delete(`/api/notes/delete/${id}/`)
+      .then((res) => {
+        if (res.status===204) alert("Note deleted!")
+          else alert("Failed to delete note.")
+        getNotes()
+      })
+      .catch((error)=> alert(error))
   }
 
-    ; <div>Home</div>
+  const createNote = (e) => {
+    e.preventDefault()
+    api.post("/api/notes", { content, title })
+      .then((res) => {
+      if (res.status ===201) alert("Note created!")
+      else alert("Failed to make note")
+      getNotes()
+      })
+    .catch((err) => alert(err))
+  }
+  return (
+    <div>
+      <div>
+        <h2>Notes</h2>
+        {notes.map((note) => {
+          <Note note={note} onDelete={deleteNote} key={note.id} />
+        })}
+      </div>
+      <h2>Create a note</h2>
+      <form onSubmit={createNote}>
+        <label htmlFor="title">Title:</label>
+        <br />
+        <input type="text" id="title" name="title"  required onChange={(e)=>setTitle(e.target.value)} />
+        <label htmlFor="content">Content</label>
+        <textarea name="content" id="content" required value={content} onChange={(e) => e.target.value}></textarea>
+        <br />
+        <input type="submit" value="submit" />
+      </form>
+    </div>
+    
+  )
+
 }
 
 export default Home
