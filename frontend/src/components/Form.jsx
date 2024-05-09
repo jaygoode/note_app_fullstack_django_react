@@ -3,14 +3,16 @@ import api from "../api"
 import { useNavigate } from "react-router-dom"
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants"
 import "../styles/Form.css"
+import LoadingIndicator from "./LoadingIndicator"
+
 function Form({ route, method }) {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState("")
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
   const name = method === "login" ? "Login" : "Register"
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     setLoading(true)
     e.preventDefault()
 
@@ -23,7 +25,7 @@ function Form({ route, method }) {
       } else {
         navigate("/login")
       }
-    } catch (e) {
+    } catch (error) {
       alert(error)
     } finally {
       setLoading(false)
@@ -47,6 +49,7 @@ function Form({ route, method }) {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
       />
+      {loading && <LoadingIndicator/>}
       <button className="form-button" type="submit">
         {name}
       </button>
